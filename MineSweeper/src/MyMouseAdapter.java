@@ -8,6 +8,8 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
+	
+	private int BombCounter=10; // esta variable sera necesaria en el futuro para demonstrar cuantas bombas el jugador puede esperar en el juego.
 	private Random generator = new Random();
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -144,14 +146,25 @@ public class MyMouseAdapter extends MouseAdapter {
 				e.translatePoint(-x11, -y11);
 				int x111 = e.getX();
 				int y111 = e.getY();
-				myPanel1.x = x11;
-				myPanel1.y = y11;
-				int gridX1 = myPanel1.getGridX(x11, y11);
-				int gridY1 = myPanel1.getGridY(x11, y11);
+				myPanel1.x = x111;
+				myPanel1.y = y111;
+				int gridX1 = myPanel1.getGridX(x111, y111);
+				int gridY1 = myPanel1.getGridY(x111, y111);
 			
 				
-				if (!(myPanel1.mouseDownGridX != gridX1) || (myPanel1.mouseDownGridY != gridY1)) //Released the mouse button on the same cell where it was pressed
-				{
+				if ((myPanel1.mouseDownGridX == -1) || (myPanel1.mouseDownGridY == -1)) {
+					//Had pressed outside
+					//Do nothing
+				} else {
+					if ((gridX1 == -1) || (gridY1 == -1)) {
+						//Is releasing outside
+						//Do nothing
+					} else {
+						if ((myPanel1.mouseDownGridX != gridX1) || (myPanel1.mouseDownGridY != gridY1)) {
+							//Released the mouse button on a different cell where it was pressed
+							//Do nothing
+						} else {
+				
 					Color currentColor = null;
 					currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
 					if (currentColor.equals(Color.WHITE)){
@@ -163,14 +176,17 @@ public class MyMouseAdapter extends MouseAdapter {
 						case 1:
 							newColor = Color.RED;
 							break;
+							
+				
 					}
+					BombCounter= this.BombCounter -1; 
 					myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = newColor;
 					myPanel1.repaint();
 					
 					
-					//On the left column and on the top row... do nothing
+					
 				} else {
-					//On the grid other than on the left column and on the top row:
+				
 					Color newColor = null;
 					switch (1) {
 						
@@ -178,15 +194,15 @@ public class MyMouseAdapter extends MouseAdapter {
 							newColor = Color.RED;
 							break;
 					}
+					BombCounter= this.BombCounter -1;
 					myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = newColor;
 					myPanel1.repaint();
-				}
+							}
+						}
 					}
 				}
-					else {
-						int counter =0;
-						counter++;
-					}
+			}
+				
 			myPanel1.repaint();
 				
 			
