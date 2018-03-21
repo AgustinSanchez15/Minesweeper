@@ -82,8 +82,19 @@ public class MyMouseAdapter extends MouseAdapter {
 				myPanel.y = y;
 				int gridX = myPanel.getGridX(x, y);
 				int gridY = myPanel.getGridY(x, y);
-				if (!(myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)) //Released the mouse button on the same cell where it was pressed
-					{
+				
+				if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
+					//Had pressed outside
+					//Do nothing
+				} else {
+					if ((gridX == -1) || (gridY == -1)) {
+						//Is releasing outside
+						//Do nothing
+					} else {
+						if ((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)) {
+							//Released the mouse button on a different cell where it was pressed
+							//Do nothing
+						} else {
 					
 					if ((gridX == 0) || (gridY == 0)) {
 						Color newColor = null;
@@ -111,8 +122,8 @@ public class MyMouseAdapter extends MouseAdapter {
 						myPanel.repaint();
 					}
 						}
-					
-				
+					}
+				}
 				myPanel.repaint();
 				break;
 				
@@ -173,7 +184,8 @@ public class MyMouseAdapter extends MouseAdapter {
 					}
 				}
 					else {
-						break;
+						int counter =0;
+						counter++;
 					}
 			myPanel1.repaint();
 				
