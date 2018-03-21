@@ -116,7 +116,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				myPanel.repaint();
 				break;
 				
-			case 3:		//Right mouse button  (cambiar el color a rojo)
+			case 3:		//Right mouse button  (cambiar el color a rojo) (no puede cambiar a rojo y el cuadro ya esta blanco)
 				
 				Component c1 = e.getComponent();
 				while (!(c1 instanceof JFrame)) {
@@ -141,6 +141,9 @@ public class MyMouseAdapter extends MouseAdapter {
 				
 				if (!(myPanel1.mouseDownGridX != gridX1) || (myPanel1.mouseDownGridY != gridY1)) //Released the mouse button on the same cell where it was pressed
 				{
+					Color currentColor = null;
+					currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
+					if (currentColor.equals(Color.WHITE)){
 				
 				if ((gridX1 == 0) || (gridY1 == 0)) {
 					Color newColor = null;
@@ -168,8 +171,10 @@ public class MyMouseAdapter extends MouseAdapter {
 					myPanel1.repaint();
 				}
 					}
-				
-			
+				}
+					else {
+						break;
+					}
 			myPanel1.repaint();
 				
 			
