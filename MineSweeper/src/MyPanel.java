@@ -16,6 +16,9 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
+	public int maxBombs = 10;
+	public Color blanco = new Color (255,255,254);
+	public Random generator = new Random();
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
@@ -38,7 +41,19 @@ public class MyPanel extends JPanel {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
+		while (maxBombs > 0 ) {
+			int randX = generator.nextInt(9)+1;
+			int randY = generator.nextInt(9)+1;
+
+			if (!(colorArray[randX][randY].equals(blanco))) {
+				colorArray[randX][randY] = blanco;
+				maxBombs= maxBombs - 1;
+			}
+		}
 	}
+
+
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -95,11 +110,11 @@ public class MyPanel extends JPanel {
 			revealAdjacent(x, y-1);
 			revealAdjacent(x, y+1);
 		}
-		
+
 		System.out.println("Test");
 
 	}
-	
+
 
 
 
