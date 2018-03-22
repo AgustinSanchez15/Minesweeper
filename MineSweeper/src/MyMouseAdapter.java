@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
@@ -101,15 +102,20 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
+							
+							
+							
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
 								newColor = Color.GRAY;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+								
 								myPanel.repaint();
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 								
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
 								
 							}else {
+								myPanel.revealAdjacent(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
