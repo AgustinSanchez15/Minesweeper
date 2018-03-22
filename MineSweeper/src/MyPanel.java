@@ -9,9 +9,9 @@ public class MyPanel extends JPanel {
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;
 	private static final int GRID_Y = 25;
-	private static final int INNER_CELL_SIZE = 70;
-	private static final int TOTAL_COLUMNS = 9;
-	private static final int TOTAL_ROWS = 10;   //Last row has only one cell
+	private static final int INNER_CELL_SIZE = 60;
+	private static final int TOTAL_COLUMNS = 10;
+	private static final int TOTAL_ROWS = 11;   //Last row has only one (gray) cell (originalmente tenia 11 pero le puse 10 para que asi sea un verdadero 10X10
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
@@ -28,10 +28,10 @@ public class MyPanel extends JPanel {
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //Top row
-			colorArray[x][0] = Color.WHITE;
+			colorArray[x][0] = Color.LIGHT_GRAY;
 		}
 		for (int y = 0; y < TOTAL_ROWS; y++) {   //Left column
-			colorArray[0][y] = Color.WHITE;
+			colorArray[0][y] = Color.LIGHT_GRAY;
 		}
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
@@ -65,8 +65,8 @@ public class MyPanel extends JPanel {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)));
 		}
 
-		//Draw an additional cell at the bottom left (no es necesario)
-		//g.drawRect(x1 + GRID_X, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)), INNER_CELL_SIZE + 1, INNER_CELL_SIZE + 1);
+		//Draw an additional cell at the bottom left
+		g.drawRect(x1 + GRID_X, y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS - 1)), INNER_CELL_SIZE + 1, INNER_CELL_SIZE + 1);
 
 		//Paint cell colors
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
