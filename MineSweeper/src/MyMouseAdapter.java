@@ -1,4 +1,4 @@
-		import java.awt.Color;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
+
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -100,25 +101,19 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
-							switch (generator.nextInt(5)) {
-							case 0:
-								newColor = Color.YELLOW;
-								break;
-							case 1:
-								newColor = Color.MAGENTA;
-								break;
-							case 2:
+							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
+								newColor = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+								myPanel.repaint();
+							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
+								
+							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
+								
+							}else {
 								newColor = Color.BLACK;
-								break;
-							case 3:
-								newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
-							case 4:
-								newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
-								break;
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+								myPanel.repaint();
 							}
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-							myPanel.repaint();
 						}
 					}
 				}
@@ -165,9 +160,10 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
+							Color blanco = new Color (255,255,254);
 							Color C1 = Color.WHITE;
 							Color C2 = Color.RED;
-							if(currentColor.equals(C1)) {
+							if(currentColor.equals(C1) || currentColor.equals(blanco)) {
 								//If the panel is white, change to red
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.RED;
 								myPanel1.repaint();
