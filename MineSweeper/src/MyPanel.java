@@ -12,11 +12,14 @@ public class MyPanel extends JPanel {
 	private static final int INNER_CELL_SIZE = 60;
 	private static final int TOTAL_COLUMNS = 10;
 	private static final int TOTAL_ROWS = 11;   //Last row has only one (gray) cell (originalmente tenia 11 pero le puse 10 para que asi sea un verdadero 10X10
+	private static int bombCounter =0;
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	public int maxBombs = 10;
+
+
 	public Color blanco = new Color (255,255,254);
 	public Random generator = new Random();
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
@@ -41,7 +44,7 @@ public class MyPanel extends JPanel {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
-		while (maxBombs > 0 ) {
+		while (maxBombs > 0 ) { // implementa las bombas 
 			int randX = generator.nextInt(9)+1;
 			int randY = generator.nextInt(9)+1;
 
@@ -100,12 +103,16 @@ public class MyPanel extends JPanel {
 	// It is partially implemented since the verify hasn't been discussed in class
 	// Verify that the coordinates in the parameters are valid.
 	// Also verifies if there are any mines around the x,y coordinate
-	public void revealAdjacent(int x, int y){
-		if((x<1) || (y<1) || (x>=9) || (y>=9)){return;}
 
-		else if (!(colorArray[x][y].equals(blanco)))
-		{
+
+	public void revealAdjacent(int x, int y){
+		if((x<1) || (y<1) || (x>=9) || (y>=9)) {
+			return;
+		}
+
+		else if (!(colorArray[x][y].equals(blanco))) {
 			colorArray[x][y] = Color.GRAY;
+
 			revealAdjacent(x-1, y);
 			revealAdjacent(x+1,y+1);
 			revealAdjacent(x+1, y);
@@ -114,13 +121,64 @@ public class MyPanel extends JPanel {
 			revealAdjacent(x-1,y+1);
 			revealAdjacent(x, y-1);
 			revealAdjacent(x, y+1);
-			}
-		else {
-		
+			return;
 		}
-		
-		System.out.println("Test");
+		else {
+			System.out.println("clicked on a bomb");
+		}
+	}
 
+
+
+
+	public void countBombs (int x, int y) {
+		if (colorArray[x][y].equals(Color.WHITE)) { 
+			if (x == 9) {
+				if(colorArray[x][y+1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}if(colorArray[x-1][y+1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}	if(colorArray[x-1][y].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}	if(colorArray[x-1][y-1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x][y-1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+			}
+			else {
+				if(colorArray[x][y+1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x][y-1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x+1][y].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x+1][y+1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x+1][y-1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x-1][y+1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x-1][y].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+				if(colorArray[x-1][y-1].equals(blanco)) {
+					bombCounter= bombCounter +1;
+				}
+			}	
+		}
+	}	
+	public static int getBombCounter() {
+		return bombCounter;}
+	public static void setBombCounter(int i) {
+		bombCounter = i;
 	}
 
 
@@ -150,7 +208,7 @@ public class MyPanel extends JPanel {
 			return -1;
 		}
 		return x;
-	}
+	} 
 	public int getGridY(int x, int y) {
 		Insets myInsets = getInsets();
 		int x1 = myInsets.left;

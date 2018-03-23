@@ -106,19 +106,23 @@ public class MyMouseAdapter extends MouseAdapter {
 							
 							
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
+								myPanel.setBombCounter(0);
+								myPanel.countBombs(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 								newColor = Color.GRAY;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+								System.out.println(myPanel.getBombCounter());
 								
 								myPanel.repaint();
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 								
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
 								
-							}else {
-								myPanel.revealAdjacent(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
+							}else { // es una bomba
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
+								
+								//ENDGAME CODE
 							}
 						}
 					}
@@ -169,6 +173,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							Color blanco = new Color (255,255,254);
 							Color C1 = Color.WHITE;
 							Color C2 = Color.RED;
+							
 							if(currentColor.equals(C1) || currentColor.equals(blanco)) {
 								//If the panel is white, change to red
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.RED;
