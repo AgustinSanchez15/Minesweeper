@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
@@ -75,6 +76,13 @@ public class MyMouseAdapter extends MouseAdapter {
 			JFrame myFrame = (JFrame)c;
 			MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
 			Insets myInsets = myFrame.getInsets();
+			
+
+			JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
+			
+			endLabel.setForeground(Color.RED);
+			myFrame.add(endLabel);
+			
 			int x1 = myInsets.left;
 			int y1 = myInsets.top;
 			e.translatePoint(-x1, -y1);
@@ -125,6 +133,7 @@ public class MyMouseAdapter extends MouseAdapter {
 								myPanel.repaint();
 
 								//ENDGAME CODE
+								myPanel.setVisible(false);
 							}
 						}
 					}
