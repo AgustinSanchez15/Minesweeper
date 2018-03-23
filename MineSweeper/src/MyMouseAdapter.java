@@ -102,7 +102,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
-
+							Color rojo = new Color (255,0,1);
 
 
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
@@ -116,7 +116,9 @@ public class MyMouseAdapter extends MouseAdapter {
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-
+								
+							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
+								
 							}else { // es una bomba
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
