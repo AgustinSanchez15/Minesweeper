@@ -76,13 +76,13 @@ public class MyMouseAdapter extends MouseAdapter {
 			JFrame myFrame = (JFrame)c;
 			MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
 			Insets myInsets = myFrame.getInsets();
-			
 
-			JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
-			
-			endLabel.setForeground(Color.RED);
-			myFrame.add(endLabel);
-			
+
+			//JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
+
+			//endLabel.setForeground(Color.RED);
+			//myFrame.add(endLabel);
+
 			int x1 = myInsets.left;
 			int y1 = myInsets.top;
 			e.translatePoint(-x1, -y1);
@@ -114,26 +114,20 @@ public class MyMouseAdapter extends MouseAdapter {
 
 
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
-								myPanel.setBombCounter(0);
-								myPanel.countBombs(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
-								newColor = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-								System.out.println(myPanel.getBombCounter());
-
-								myPanel.repaint();
+								myPanel.revealAdjacent(gridX, gridY);
+								
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-								
+
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
-								
+
 							}else { // es una bomba
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
-
 								//ENDGAME CODE
-								myPanel.setVisible(false);
+								//myPanel.setVisible(false);
 							}
 						}
 					}
@@ -191,7 +185,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							} else if(currentColor.equals(blanco)) {
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = rojo;
 								myPanel1.repaint();
-								
+
 							} else if (currentColor.equals(Color.RED)){
 								//If the panel is red, then change to white
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.WHITE;

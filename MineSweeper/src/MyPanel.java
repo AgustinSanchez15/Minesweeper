@@ -13,6 +13,7 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 10;
 	private static final int TOTAL_ROWS = 11;   //Last row has only one (gray) cell (originalmente tenia 11 pero le puse 10 para que asi sea un verdadero 10X10
 	private static int bombCounter =0;
+	private static int count;
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
@@ -51,6 +52,7 @@ public class MyPanel extends JPanel {
 			if (!(colorArray[randX][randY].equals(blanco))) {
 				colorArray[randX][randY] = blanco;
 				maxBombs= maxBombs - 1;
+				System.out.println(randX + ", " + randY);
 			}
 		}
 	}
@@ -106,30 +108,33 @@ public class MyPanel extends JPanel {
 
 
 	public void revealAdjacent(int x, int y){
-		if((x<1) || (y<1) || (x>=9) || (y>=9)) {
+		if((x<=0) || (y<=0) || (x>=10) || (y>=10)){
 			return;
 		}
 
-		else if (!(colorArray[x][y].equals(blanco))) {
-			colorArray[x][y] = Color.GRAY;
-
-			revealAdjacent(x-1, y);
-			revealAdjacent(x+1,y+1);
-			revealAdjacent(x+1, y);
-			revealAdjacent(x-1,y-1);
-			revealAdjacent(x+1,y-1);
-			revealAdjacent(x-1,y+1);
-			revealAdjacent(x, y-1);
-			revealAdjacent(x, y+1);
-			return;
-		}
 		else {
-			System.out.println("clicked on a bomb");
+			setBombCounter(0);
+			countBombs(x, y);
+			if(getBombCounter() != 0 && colorArray[x][y].equals(Color.WHITE)) {
+				colorArray[x][y] = Color.GRAY;
+				repaint();
+				System.out.println(getBombCounter());
+
+			} else {
+				if(getBombCounter() == 0 && colorArray[x][y].equals(Color.WHITE)) {
+					colorArray[x][y] = Color.GRAY;
+					revealAdjacent(x, y-1);
+					revealAdjacent(x+1, y-1);
+					revealAdjacent(x+1, y);
+					revealAdjacent(x+1, y+1);
+					revealAdjacent(x, y+1);
+					revealAdjacent(x-1, y+1);
+					revealAdjacent(x-1, y);
+					revealAdjacent(x-1, y-1);
+				}
+			}
 		}
 	}
-
-
-
 
 	public void countBombs (int x, int y) {
 		if (colorArray[x][y].equals(Color.WHITE)) { 
@@ -175,9 +180,9 @@ public class MyPanel extends JPanel {
 			}	
 		}
 	}	
-	public static int getBombCounter() {
+	public int getBombCounter() {
 		return bombCounter;}
-	public static void setBombCounter(int i) {
+	public void setBombCounter(int i) {
 		bombCounter = i;
 	}
 
