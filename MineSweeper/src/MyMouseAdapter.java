@@ -102,26 +102,26 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
-							
-							
-							
+
+
+
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
 								myPanel.setBombCounter(0);
 								myPanel.countBombs(myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 								newColor = Color.GRAY;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								System.out.println(myPanel.getBombCounter());
-								
+
 								myPanel.repaint();
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
-								
+
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-								
+
 							}else { // es una bomba
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
-								
+
 								//ENDGAME CODE
 							}
 						}
@@ -171,19 +171,25 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the grid other than on the left column and on the top row:
 							Color currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
 							Color blanco = new Color (255,255,254);
-							Color C1 = Color.WHITE;
-							Color C2 = Color.RED;
-							
-							if(currentColor.equals(C1) || currentColor.equals(blanco)) {
+							Color rojo = new Color (255,0,1);
+
+							if(currentColor.equals(Color.WHITE)) {
 								//If the panel is white, change to red
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.RED;
 								myPanel1.repaint();
-							} else if (currentColor.equals(C2)){
+							} else if(currentColor.equals(blanco)) {
+								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = rojo;
+								myPanel1.repaint();
+								
+							} else if (currentColor.equals(Color.RED)){
 								//If the panel is red, then change to white
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.WHITE;
 								myPanel1.repaint();
-							} else {
-								//If the panel is neither red nor white, do nothing
+							} 
+							else if (currentColor.equals(rojo)) {
+								//If the panel is rojo, then change to blanco
+								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = blanco;
+								myPanel1.repaint();
 							}
 						}
 					}
