@@ -24,7 +24,6 @@ public class MyPanel extends JPanel {
 	public Color blanco = new Color (255,255,254);
 	public Random generator = new Random();
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-	public int[][] intArray = new int[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -43,26 +42,20 @@ public class MyPanel extends JPanel {
 		}
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
-				intArray[x][y] = 0;
 				colorArray[x][y] = Color.WHITE;
-				// implemetar un loop para las bombas 
-				
-					}
-				}
+			}
+		}
 		while (maxBombs > 0 ) { // implementa las bombas 
-					int randX = generator.nextInt(9)+1;
-					int randY = generator.nextInt(9)+1;
+			int randX = generator.nextInt(9)+1;
+			int randY = generator.nextInt(9)+1;
 
-					if (!(intArray[randX][randY] == 1)) {
-						intArray[randX][randY] = 1;
-						maxBombs= maxBombs - 1;
-						System.out.println(randX + ", " + randY);
+			if (!(colorArray[randX][randY].equals(blanco))) {
+				colorArray[randX][randY] = blanco;
+				maxBombs= maxBombs - 1;
+				System.out.println(randX + ", " + randY);
 			}
 		}
 	}
-					
-		
-	
 
 
 
@@ -122,13 +115,13 @@ public class MyPanel extends JPanel {
 		else {
 			setBombCounter(0);
 			countBombs(x, y);
-			if(getBombCounter() != 0 && intArray[x][y] == 0) {
+			if(getBombCounter() != 0 && colorArray[x][y].equals(Color.WHITE)) {
 				colorArray[x][y] = Color.GRAY;
 				repaint();
 				System.out.println(getBombCounter());
 
 			} else {
-				if(getBombCounter() == 0 && intArray[x][y] == 0) {
+				if(getBombCounter() == 0 && colorArray[x][y].equals(Color.WHITE)) {
 					colorArray[x][y] = Color.GRAY;
 					revealAdjacent(x, y-1);
 					revealAdjacent(x+1, y-1);
@@ -144,44 +137,44 @@ public class MyPanel extends JPanel {
 	}
 
 	public void countBombs (int x, int y) {
-		if (intArray[x][y] == 0) { 
+		if (colorArray[x][y].equals(Color.WHITE)) { 
 			if (x == 9) {
-				if(intArray[x][y+1] == 1) {
+				if(colorArray[x][y+1].equals(blanco)) {
 					bombCounter= bombCounter +1;
-				}if(intArray[x-1][y+1] == 1) {
+				}if(colorArray[x-1][y+1].equals(blanco)) {
 					bombCounter= bombCounter +1;
-				}	if(intArray[x-1][y] == 1) {
+				}	if(colorArray[x-1][y].equals(blanco)) {
 					bombCounter= bombCounter +1;
-				}	if(intArray[x-1][y-1] == 1 ) {
+				}	if(colorArray[x-1][y-1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x][y-1]==1 ) {
+				if(colorArray[x][y-1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
 			}
 			else {
-				if(intArray[x][y+1] ==1 ) {
+				if(colorArray[x][y+1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x][y-1] == 1) {
+				if(colorArray[x][y-1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x+1][y]== 1) {
+				if(colorArray[x+1][y].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x+1][y+1]==1) {
+				if(colorArray[x+1][y+1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x+1][y-1] ==1) {
+				if(colorArray[x+1][y-1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x-1][y+1] == 1) {
+				if(colorArray[x-1][y+1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x-1][y] == 1) {
+				if(colorArray[x-1][y].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
-				if(intArray[x-1][y-1] == 1) {
+				if(colorArray[x-1][y-1].equals(blanco)) {
 					bombCounter= bombCounter +1;
 				}
 			}	
