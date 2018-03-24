@@ -103,7 +103,7 @@ public class MyPanel extends JPanel {
 					number[x][y] = getBombCounter();
 					
 					
-					if(colorArray[x][y].equals(Color.GRAY)) {
+					if(colorArray[x][y].equals(Color.WHITE)) {
 						g.setColor(Color.BLACK);
 						g.drawString(String.valueOf(num), x1 + GRID_X + (x * (INNER_CELL_SIZE + 1))+27, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1))+33);
 					}
