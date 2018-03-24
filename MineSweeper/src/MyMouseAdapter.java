@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
@@ -111,7 +110,6 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
 							
-
 						
 							if(myPanel.intArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0) {
 								myPanel.revealAdjacent(gridX, gridY);
@@ -128,10 +126,6 @@ public class MyMouseAdapter extends MouseAdapter {
 								myPanel.repaint();
 								//ENDGAME CODE
 								//myPanel.setVisible(false);
-								
-								
-								
-								
 
 							} 
 						}

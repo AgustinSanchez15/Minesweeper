@@ -56,7 +56,7 @@ public class MyPanel extends JPanel {
 					if (!(intArray[randX][randY] == 1)) {
 						intArray[randX][randY] = 1;
 						maxBombs= maxBombs - 1;
-						//  System.out.println(randX + ", " + randY);
+						System.out.println(randX + ", " + randY);
 			}
 		}
 	}
