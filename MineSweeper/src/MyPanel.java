@@ -13,7 +13,6 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 10;
 	private static final int TOTAL_ROWS = 11;   //Last row has only one (gray) cell (originalmente tenia 11 pero le puse 10 para que asi sea un verdadero 10X10
 	private static int bombCounter =0;
-	private static int count;
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
@@ -24,6 +23,7 @@ public class MyPanel extends JPanel {
 	public Color blanco = new Color (255,255,254);
 	public Random generator = new Random();
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public int number[][] = new int [TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -52,7 +52,7 @@ public class MyPanel extends JPanel {
 			if (!(colorArray[randX][randY].equals(blanco))) {
 				colorArray[randX][randY] = blanco;
 				maxBombs= maxBombs - 1;
-				System.out.println(randX + ", " + randY);
+				//System.out.println(randX + ", " + randY);
 			}
 		}
 	}
@@ -95,6 +95,18 @@ public class MyPanel extends JPanel {
 					Color c = colorArray[x][y];
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+					
+					//Lets draw a string
+					int num = number[x][y];
+					setBombCounter(0);
+					countBombs(x, y);
+					number[x][y] = getBombCounter();
+					
+					
+					if(colorArray[x][y].equals(Color.GRAY)) {
+						g.setColor(Color.BLACK);
+						g.drawString(String.valueOf(num), x1 + GRID_X + (x * (INNER_CELL_SIZE + 1))+27, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1))+33);
+					}
 				}
 			}
 		}
@@ -118,7 +130,7 @@ public class MyPanel extends JPanel {
 			if(getBombCounter() != 0 && colorArray[x][y].equals(Color.WHITE)) {
 				colorArray[x][y] = Color.GRAY;
 				repaint();
-				System.out.println(getBombCounter());
+				//System.out.println(getBombCounter());
 
 			} else {
 				if(getBombCounter() == 0 && colorArray[x][y].equals(Color.WHITE)) {
