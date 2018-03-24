@@ -116,17 +116,24 @@ public class MyMouseAdapter extends MouseAdapter {
 							if(myPanel.intArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0) {
 								myPanel.revealAdjacent(gridX, gridY);
 
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
+							}else if (myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
+								// do nothing
+							}
 
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-
-							}else { // es una bomba
+							else if(myPanel.intArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] ==1 ) {
+								// es una bomba
+								
 								newColor = Color.BLACK;
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
 								//ENDGAME CODE
 								//myPanel.setVisible(false);
-							}
+								
+								
+								
+								
+
+							} 
 						}
 					}
 				}
