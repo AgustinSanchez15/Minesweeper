@@ -110,17 +110,15 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
-							Color rojo = new Color (255,0,1);
+							
 
-
-							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
+						
+							if(myPanel.intArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == 0) {
 								myPanel.revealAdjacent(gridX, gridY);
-								
+
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
 
 							}else { // es una bomba
 								newColor = Color.BLACK;
@@ -174,26 +172,18 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
+							
 							Color currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
-							Color blanco = new Color (255,255,254);
-							Color rojo = new Color (255,0,1);
+							
+							
 
 							if(currentColor.equals(Color.WHITE)) {
 								//If the panel is white, change to red
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.RED;
 								myPanel1.repaint();
-							} else if(currentColor.equals(blanco)) {
-								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = rojo;
-								myPanel1.repaint();
-
 							} else if (currentColor.equals(Color.RED)){
 								//If the panel is red, then change to white
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.WHITE;
-								myPanel1.repaint();
-							} 
-							else if (currentColor.equals(rojo)) {
-								//If the panel is rojo, then change to blanco
-								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = blanco;
 								myPanel1.repaint();
 							}
 						}
