@@ -18,14 +18,11 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
 	public Color rojo = new Color (255, 0, 1);
 	public Random generator = new Random();
 	private int grayCounter = 0 ;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-	public int number[][] = new int [TOTAL_COLUMNS][TOTAL_ROWS];
-	public boolean number1[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	
 	
 	
@@ -48,13 +45,6 @@ public class MyPanel extends JPanel {
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
-			}
-		}
-		for(int i=1;i<10;i++) {
-			for(int j=1;j<10;j++) {
-				setBombCounter(0);
-				countBombs(i, j);
-				number[i][j] = getBombCounter();
 			}
 		}
 	}
@@ -99,9 +89,9 @@ public class MyPanel extends JPanel {
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
 
 					//Lets draw a string
-					if(colorArray[x][y].equals(Color.GRAY) && number[x][y] >0) {
+					if(colorArray[x][y].equals(Color.GRAY) && MyMouseAdapter.getNumber()[x][y] > 0) {
 						g.setColor(Color.BLACK);
-						g.drawString(String.valueOf(number[x][y]), x1 + GRID_X + (x * (INNER_CELL_SIZE + 1))+27, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1))+33);
+						g.drawString(String.valueOf(MyMouseAdapter.getNumber()[x][y]), x1 + GRID_X + (x * (INNER_CELL_SIZE + 1))+27, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1))+33);
 					}
 				}
 			}
@@ -116,7 +106,6 @@ public class MyPanel extends JPanel {
 
 
 	public void revealAdjacent(int x, int y){
-		firstClick = false;
 		
 		if((x<=0) || (y<=0) || (x>=10) || (y>=10)){
 			return;
@@ -200,9 +189,6 @@ public class MyPanel extends JPanel {
 	}
 	public int getGrayCounter() {
 		return grayCounter;
-	}
-	public boolean isFirstClick() {
-		return firstClick;
 	}
 
 

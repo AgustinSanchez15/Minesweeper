@@ -14,6 +14,7 @@ public class MyMouseAdapter extends MouseAdapter {
 	public int maxBombs = 10;
 	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
+	private static int number[][] = new int [10][11];
 
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -101,12 +102,19 @@ public class MyMouseAdapter extends MouseAdapter {
 					int randX = generator.nextInt(9)+1;
 					int randY = generator.nextInt(9)+1;
 
-					if(randX != myPanel.mouseDownGridX || randY != myPanel.mouseDownGridY) {
+					if(randX != myPanel.mouseDownGridX && randY != myPanel.mouseDownGridY) {
 						if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
 							myPanel.colorArray[randX][randY] = blanco;
 							maxBombs= maxBombs - 1;
 							//System.out.println(randX + ", " + randY);
 						}
+					}
+				}
+				for(int i=1;i<10;i++) {
+					for(int j=1;j<10;j++) {
+						myPanel.setBombCounter(0);
+						myPanel.countBombs(i, j);
+						number[i][j] = myPanel.getBombCounter();
 					}
 				}
 				firstClick = false;
@@ -235,5 +243,8 @@ public class MyMouseAdapter extends MouseAdapter {
 			//Do nothing
 			break;
 		}
+	}
+	public static int[][] getNumber() {
+		return number;
 	}
 }
