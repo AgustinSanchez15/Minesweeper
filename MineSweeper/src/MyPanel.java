@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
+	
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;
 	private static final int GRID_Y = 25;
@@ -18,14 +19,17 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	public int maxBombs = 10;
-
-
+	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
 	public Color rojo = new Color (255, 0, 1);
 	public Random generator = new Random();
+	private int grayCounter = 0 ;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public int number[][] = new int [TOTAL_COLUMNS][TOTAL_ROWS];
 	public boolean number1[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	
+	
+	
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -123,6 +127,8 @@ public class MyPanel extends JPanel {
 
 
 	public void revealAdjacent(int x, int y){
+		firstClick = false;
+		
 		if((x<=0) || (y<=0) || (x>=10) || (y>=10)){
 			return;
 		}
@@ -132,12 +138,15 @@ public class MyPanel extends JPanel {
 			countBombs(x, y);
 			if(getBombCounter() != 0 && colorArray[x][y].equals(Color.WHITE)) {
 				colorArray[x][y] = Color.GRAY;
+				grayCounter++;
+				
 				repaint();
 				//System.out.println(getBombCounter());
 
 			} else {
 				if(getBombCounter() == 0 && colorArray[x][y].equals(Color.WHITE)) {
 					colorArray[x][y] = Color.GRAY;
+					grayCounter++;
 					revealAdjacent(x, y-1);
 					revealAdjacent(x+1, y-1);
 					revealAdjacent(x+1, y);
@@ -199,6 +208,12 @@ public class MyPanel extends JPanel {
 		return bombCounter;}
 	public void setBombCounter(int i) {
 		bombCounter = i;
+	}
+	public int getGrayCounter() {
+		return grayCounter;
+	}
+	public boolean isFirstClick() {
+		return firstClick;
 	}
 
 

@@ -78,10 +78,10 @@ public class MyMouseAdapter extends MouseAdapter {
 			Insets myInsets = myFrame.getInsets();
 
 
-			//JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
-
-			//endLabel.setForeground(Color.RED);
-			//myFrame.add(endLabel);
+			JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
+			JLabel winLabel = new JLabel ("You win!! ",JLabel.CENTER);
+			endLabel.setForeground(Color.RED);
+			winLabel.setForeground(Color.BLUE);
 
 			int x1 = myInsets.left;
 			int y1 = myInsets.top;
@@ -111,24 +111,31 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
 							Color rojo = new Color (255,0,1);
+							Color blanco = new Color (255,255,254);
 
 
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
 								myPanel.revealAdjacent(gridX, gridY);
-								
+
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
 
-							}else { // es una bomba
-								newColor = Color.BLACK;
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-								myPanel.repaint();
-								//ENDGAME CODE
-								//myPanel.setVisible(false);
 							}
+							else {
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
+								//ENDGAME CODE
+								myFrame.add(endLabel);
+								myPanel.setVisible(false);
+							}
+
+						}	if (myPanel.getGrayCounter() == 71) {
+							System.out.println("u win");
+							myFrame.add(winLabel);
+							myPanel.setVisible(false);
+							// win Code here
 						}
 					}
 				}
