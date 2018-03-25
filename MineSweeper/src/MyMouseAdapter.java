@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
+	public int maxBombs = 10;
+	public boolean firstClick = true;
+	public Color blanco = new Color (255,255,254);
 
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -92,6 +95,23 @@ public class MyMouseAdapter extends MouseAdapter {
 			myPanel.y = y;
 			int gridX = myPanel.getGridX(x, y);
 			int gridY = myPanel.getGridY(x, y);
+
+			if(firstClick == true) {
+				while (maxBombs > 0 ) { // implementa las bombas 
+					int randX = generator.nextInt(9)+1;
+					int randY = generator.nextInt(9)+1;
+
+					if(randX != myPanel.mouseDownGridX || randY != myPanel.mouseDownGridY) {
+						if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
+							myPanel.colorArray[randX][randY] = blanco;
+							maxBombs= maxBombs - 1;
+							//System.out.println(randX + ", " + randY);
+						}
+					}
+				}
+				firstClick = false;
+			}
+
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
 				//Had pressed outside
 				//Do nothing
@@ -111,7 +131,6 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
 							Color rojo = new Color (255,0,1);
-							Color blanco = new Color (255,255,254);
 
 
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
@@ -132,7 +151,6 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 
 						}	if (myPanel.getGrayCounter() == 71) {
-							System.out.println("u win");
 							myFrame.add(winLabel);
 							myPanel.setVisible(false);
 							// win Code here
@@ -182,7 +200,6 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
-							Color blanco = new Color (255,255,254);
 							Color rojo = new Color (255,0,1);
 
 							if(currentColor.equals(Color.WHITE)) {

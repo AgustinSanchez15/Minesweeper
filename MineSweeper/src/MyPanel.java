@@ -18,7 +18,6 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public int maxBombs = 10;
 	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
 	public Color rojo = new Color (255, 0, 1);
@@ -49,16 +48,6 @@ public class MyPanel extends JPanel {
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
-			}
-		}
-		while (maxBombs > 0 ) { // implementa las bombas 
-			int randX = generator.nextInt(9)+1;
-			int randY = generator.nextInt(9)+1;
-
-			if (!(colorArray[randX][randY].equals(blanco))) {
-				colorArray[randX][randY] = blanco;
-				maxBombs= maxBombs - 1;
-				//System.out.println(randX + ", " + randY);
 			}
 		}
 		for(int i=1;i<10;i++) {
