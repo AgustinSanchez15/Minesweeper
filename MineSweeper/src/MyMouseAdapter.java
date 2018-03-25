@@ -98,18 +98,24 @@ public class MyMouseAdapter extends MouseAdapter {
 			int gridY = myPanel.getGridY(x, y);
 
 			if(firstClick == true) {
+				
 				while (maxBombs > 0 ) { // implementa las bombas 
 					int randX = generator.nextInt(9)+1;
 					int randY = generator.nextInt(9)+1;
 
-					if(randX != myPanel.mouseDownGridX && randY != myPanel.mouseDownGridY) {
+					if(randX != myPanel.mouseDownGridX
+							&& randX != myPanel.mouseDownGridX+1 
+							&& randX != myPanel.mouseDownGridX-1
+							&& randY != myPanel.mouseDownGridY
+							&& randY != myPanel.mouseDownGridY+1
+							&& randY != myPanel.mouseDownGridY-1) {
 						if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
 							myPanel.colorArray[randX][randY] = blanco;
 							maxBombs= maxBombs - 1;
-							//System.out.println(randX + ", " + randY);
 						}
 					}
 				}
+
 				for(int i=1;i<10;i++) {
 					for(int j=1;j<10;j++) {
 						myPanel.setBombCounter(0);
@@ -150,6 +156,15 @@ public class MyMouseAdapter extends MouseAdapter {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
 
+							}else if(firstClick == true) {
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY-1] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY-1] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY+1] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY+1] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY+1] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY] = Color.GRAY;
+								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY-1] = Color.GRAY;
 							}
 							else {
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
