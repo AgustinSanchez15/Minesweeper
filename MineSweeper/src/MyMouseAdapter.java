@@ -4,7 +4,13 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -152,6 +158,20 @@ public class MyMouseAdapter extends MouseAdapter {
 								//If the user left clicks on the gray panel, do nothing
 
 							}else { //The user loses the game:
+								
+								//Plays explosion sounds
+								File audioFile = new File("explode1.wav");
+								AudioInputStream audioStream;
+								try {
+									audioStream = AudioSystem.getAudioInputStream(audioFile);
+									DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
+									Clip audioClip = (Clip) AudioSystem.getLine(info);
+									audioClip.open(audioStream);
+									audioClip.start();
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+								
 								//Reveals all the mines:
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
