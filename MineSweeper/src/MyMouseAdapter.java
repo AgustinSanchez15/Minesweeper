@@ -113,8 +113,8 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 
-							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
-								if(firstClick == true) {
+							if(myPanel.isBomb[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==false) {
+								if(firstClick) {
 
 									while (maxBombs > 0 ) { // implementa las bombas 
 										int randX = generator.nextInt(9)+1;
@@ -126,8 +126,8 @@ public class MyMouseAdapter extends MouseAdapter {
 												&& randY != myPanel.mouseDownGridY
 												&& randY != myPanel.mouseDownGridY+1
 												&& randY != myPanel.mouseDownGridY-1) {
-											if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
-												myPanel.colorArray[randX][randY] = blanco;
+											if (!(myPanel.isBomb[randX][randY])) {
+												myPanel.isBomb[randX][randY] = true;
 												maxBombs= maxBombs - 1;
 											}
 										}
@@ -148,12 +148,10 @@ public class MyMouseAdapter extends MouseAdapter {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
 
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
-
-							} else { //The user loses the game
+							}else { //The user loses the game
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
-										if(myPanel.colorArray[i][j] == blanco || myPanel.colorArray[i][j] == rojo) {
+										if(myPanel.isBomb[i][j] == true) {
 											myPanel.colorArray[i][j] = Color.BLACK;
 											myPanel.repaint();
 										}
@@ -168,6 +166,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									for(int i=1;i<10;i++) {
 										for(int j=1;j<10;j++) {
 											myPanel.colorArray[i][j]= Color.WHITE;
+											myPanel.isBomb[i][j] = false;
 											numberBombs[i][j] = 0;
 										}
 									}
@@ -184,7 +183,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							//Win window pop up here
 							for(int i=1;i<10;i++) {
 								for(int j=1;j<10;j++) {
-									if(myPanel.colorArray[i][j] == blanco || myPanel.colorArray[i][j] == rojo) {
+									if( myPanel.isBomb[i][j] == true) {
 										myPanel.colorArray[i][j] = Color.BLACK;
 										myPanel.repaint();
 									}
@@ -198,6 +197,7 @@ public class MyMouseAdapter extends MouseAdapter {
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
 										myPanel.colorArray[i][j]= Color.WHITE;
+										myPanel.isBomb[i][j] = false;
 										numberBombs[i][j] = 0;
 									}
 								}
@@ -255,24 +255,14 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							//On the grid other than on the left column and on the top row:
 							Color currentColor = myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY];
-							Color rojo = new Color (255,0,1);
 
 							if(currentColor.equals(Color.WHITE)) {
 								//If the panel is white, change to red
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.RED;
 								myPanel1.repaint();
-							} else if(currentColor.equals(blanco)) {
-								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = rojo;
-								myPanel1.repaint();
-
 							} else if (currentColor.equals(Color.RED)){
 								//If the panel is red, then change to white
 								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = Color.WHITE;
-								myPanel1.repaint();
-							} 
-							else if (currentColor.equals(rojo)) {
-								//If the panel is rojo, then change to blanco
-								myPanel1.colorArray[myPanel1.mouseDownGridX][myPanel1.mouseDownGridY] = blanco;
 								myPanel1.repaint();
 							}
 						}

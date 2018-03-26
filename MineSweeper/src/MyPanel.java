@@ -23,6 +23,7 @@ public class MyPanel extends JPanel {
 	public Random generator = new Random();
 	private int grayCounter = 0 ;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public boolean[][] isBomb = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 	
 	
 	
@@ -38,13 +39,16 @@ public class MyPanel extends JPanel {
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {   //Top row
 			colorArray[x][0] = Color.LIGHT_GRAY;
+			isBomb[x][0] = false;
 		}
 		for (int y = 0; y < TOTAL_ROWS; y++) {   //Left column
 			colorArray[0][y] = Color.LIGHT_GRAY;
+			isBomb[0][y] = false;
 		}
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
 				colorArray[x][y] = Color.WHITE;
+				isBomb[x][y] = false;
 			}
 		}
 	}
@@ -91,6 +95,7 @@ public class MyPanel extends JPanel {
 					//Lets draw a string
 					if(colorArray[x][y].equals(Color.GRAY) && MyMouseAdapter.getNumber()[x][y] > 0) {
 						g.setColor(Color.BLACK);
+						isBomb[x][y] = false;
 						g.drawString(String.valueOf(MyMouseAdapter.getNumber()[x][y]), x1 + GRID_X + (x * (INNER_CELL_SIZE + 1))+27, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1))+33);
 					}
 				}
@@ -114,7 +119,10 @@ public class MyPanel extends JPanel {
 		else {
 			setBombCounter(0);
 			countBombs(x, y);
-			if(getBombCounter() != 0 && colorArray[x][y].equals(Color.WHITE)) {
+			if(bombCounter!=0) {
+				System.out.println("Hey!!!!");
+			}
+			if(getBombCounter() != 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
 				colorArray[x][y] = Color.GRAY;
 				grayCounter++;
 				
@@ -122,7 +130,7 @@ public class MyPanel extends JPanel {
 				//System.out.println(getBombCounter());
 
 			} else {
-				if(getBombCounter() == 0 && colorArray[x][y].equals(Color.WHITE)) {
+				if(getBombCounter() == 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
 					colorArray[x][y] = Color.GRAY;
 					grayCounter++;
 					revealAdjacent(x, y-1);
@@ -141,42 +149,42 @@ public class MyPanel extends JPanel {
 	public void countBombs (int x, int y) {
 		if (colorArray[x][y].equals(Color.WHITE)) { 
 			if (x == 9) {
-				if(colorArray[x][y+1].equals(blanco) || colorArray[x][y+1].equals(rojo)) {
+				if( isBomb[x][y+1] == true) {
 					bombCounter= bombCounter +1;
-				}if(colorArray[x-1][y+1].equals(blanco) || colorArray[x-1][y+1].equals(rojo)) {
+				}if(isBomb[x-1][y+1]== true ) {
 					bombCounter= bombCounter +1;
-				}	if(colorArray[x-1][y].equals(blanco) || colorArray[x-1][y].equals(rojo)) {
+				}	if(isBomb[x-1][y]== true ) {
 					bombCounter= bombCounter +1;
-				}	if(colorArray[x-1][y-1].equals(blanco) || colorArray[x-1][y-1].equals(rojo)) {
+				}	if( isBomb[x-1][y-1]== true) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x][y-1].equals(blanco) || colorArray[x][y-1].equals(rojo)) {
+				if(isBomb[x][y-1]== true ) {
 					bombCounter= bombCounter +1;
 				}
 			}
 			else {
-				if(colorArray[x][y+1].equals(blanco) || colorArray[x][y+1].equals(rojo)) {
+				if(isBomb[x][y+1] == true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x][y-1].equals(blanco) || colorArray[x][y-1].equals(rojo)) {
+				if(isBomb[x][y-1]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x+1][y].equals(blanco) || colorArray[x+1][y].equals(rojo)) {
+				if(isBomb[x+1][y]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x+1][y+1].equals(blanco) || colorArray[x+1][y+1].equals(rojo)) {
+				if(isBomb[x+1][y+1]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x+1][y-1].equals(blanco) || colorArray[x+1][y-1].equals(rojo)) {
+				if(isBomb[x+1][y-1]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x-1][y+1].equals(blanco) || colorArray[x-1][y+1].equals(rojo)) {
+				if(isBomb[x-1][y+1]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x-1][y].equals(blanco) || colorArray[x-1][y].equals(rojo)) {
+				if(isBomb[x-1][y]==true ) {
 					bombCounter= bombCounter +1;
 				}
-				if(colorArray[x-1][y-1].equals(blanco) || colorArray[x-1][y-1].equals(rojo)) {
+				if(isBomb[x-1][y-1]==true ) {
 					bombCounter= bombCounter +1;
 				}
 			}	
