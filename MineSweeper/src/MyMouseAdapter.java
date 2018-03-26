@@ -18,8 +18,6 @@ public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public int maxBombs = 10;
 	public boolean firstClick = true;
-	public Color blanco = new Color (255,255,254);
-	Color rojo = new Color (255,0,1);
 	private static int numberBombs[][] = new int [10][11];
 
 

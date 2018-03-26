@@ -18,8 +18,6 @@ public class MyPanel extends JPanel {
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public Color blanco = new Color (255,255,254);
-	public Color rojo = new Color (255, 0, 1);
 	public Random generator = new Random();
 	private int grayCounter = 0 ;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
