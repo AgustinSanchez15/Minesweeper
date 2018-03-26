@@ -22,7 +22,7 @@ public class MyMouseAdapter extends MouseAdapter {
 	Color rojo = new Color (255,0,1);
 	private static int numberBombs[][] = new int [10][11];
 
-	
+
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -146,19 +146,20 @@ public class MyMouseAdapter extends MouseAdapter {
 										}
 									}
 									firstClick = false;
+								} 
+
+								if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
+									//If the user left clicks on the red panel, do nothing
+
+								} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
+									//If the user left clicks on the gray panel, do nothing
+
+								} else {
+									myPanel.revealAdjacent(gridX, gridY);
 								}
+							} 
+							if(myPanel.isBomb[myPanel.mouseDownGridX][myPanel.mouseDownGridY] && (myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE))) { //The user loses the game:
 
-								//Reveals the nearby panels where the user clicked 
-								myPanel.revealAdjacent(gridX, gridY);
-
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
-								//If the user left clicks on the red panel, do nothing
-
-							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
-								//If the user left clicks on the gray panel, do nothing
-
-							}else { //The user loses the game:
-								
 								//Plays explosion sounds
 								File audioFile = new File("explode1.wav");
 								AudioInputStream audioStream;
@@ -171,7 +172,7 @@ public class MyMouseAdapter extends MouseAdapter {
 								} catch (Exception e1) {
 									e1.printStackTrace();
 								}
-								
+
 								//Reveals all the mines:
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
@@ -206,9 +207,22 @@ public class MyMouseAdapter extends MouseAdapter {
 								}
 							}
 						}  
-						
+
 						//The user wins the game:
 						if (myPanel.getGrayCounter() == 71) {
+							//Adds sounds
+							File audioFile = new File("classic_hurt.wav");
+							AudioInputStream audioStream;
+							try {
+								audioStream = AudioSystem.getAudioInputStream(audioFile);
+								DataLine.Info info = new DataLine.Info(Clip.class, audioStream.getFormat());
+								Clip audioClip = (Clip) AudioSystem.getLine(info);
+								audioClip.open(audioStream);
+								audioClip.start();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+
 							//Reveals all the mines: 
 							for(int i=1;i<10;i++) {
 								for(int j=1;j<10;j++) {
