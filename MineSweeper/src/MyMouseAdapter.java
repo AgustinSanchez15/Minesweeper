@@ -179,8 +179,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									System.exit(0);
 								}
 							}
-						}	if (myPanel.getGrayCounter() == 71) {
-							//Win window pop up here
+						}	if (myPanel.getGrayCounter() == 71) { //The user wins the game
 							for(int i=1;i<10;i++) {
 								for(int j=1;j<10;j++) {
 									if( myPanel.isBomb[i][j] == true) {
@@ -189,7 +188,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									}
 								}
 							}
-							int response = JOptionPane.showConfirmDialog(null, "You Win! Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
+							int response = JOptionPane.showConfirmDialog(null, "You Win! Play again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
 							if (response == JOptionPane.NO_OPTION) {
 								System.exit(0);
 

@@ -120,7 +120,7 @@ public class MyPanel extends JPanel {
 			setBombCounter(0);
 			countBombs(x, y);
 			if(bombCounter!=0) {
-				System.out.println("Hey!!!!");
+				//System.out.println("Hey!!!!");
 			}
 			if(getBombCounter() != 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
 				colorArray[x][y] = Color.GRAY;
