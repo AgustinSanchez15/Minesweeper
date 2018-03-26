@@ -13,6 +13,7 @@ public class MyMouseAdapter extends MouseAdapter {
 	public int maxBombs = 10;
 	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
+	Color rojo = new Color (255,0,1);
 	private static int numberBombs[][] = new int [10][11];
 
 
@@ -111,7 +112,6 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
-							Color rojo = new Color (255,0,1);
 
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
 								if(firstClick == true) {
@@ -150,8 +150,15 @@ public class MyMouseAdapter extends MouseAdapter {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
 
-							} else {
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
+							} else { //The user loses the game
+								for(int i=1;i<10;i++) {
+									for(int j=1;j<10;j++) {
+										if(myPanel.colorArray[i][j] == blanco || myPanel.colorArray[i][j] == rojo) {
+											myPanel.colorArray[i][j] = Color.BLACK;
+											myPanel.repaint();
+										}
+									}
+								}
 								
 								int response = JOptionPane.showConfirmDialog(null, "Sorry, you lost the game. Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
 								if (response == JOptionPane.NO_OPTION) {
@@ -175,6 +182,14 @@ public class MyMouseAdapter extends MouseAdapter {
 							}
 						}	if (myPanel.getGrayCounter() == 71) {
 							//Win window pop up here
+							for(int i=1;i<10;i++) {
+								for(int j=1;j<10;j++) {
+									if(myPanel.colorArray[i][j] == blanco || myPanel.colorArray[i][j] == rojo) {
+										myPanel.colorArray[i][j] = Color.BLACK;
+										myPanel.repaint();
+									}
+								}
+							}
 							int response = JOptionPane.showConfirmDialog(null, "You Win! Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
 							if (response == JOptionPane.NO_OPTION) {
 								System.exit(0);
