@@ -108,8 +108,6 @@ public class MyPanel extends JPanel {
 	// It is partially implemented since the verify hasn't been discussed in class
 	// Verify that the coordinates in the parameters are valid.
 	// Also verifies if there are any mines around the x,y coordinate
-
-
 	public void revealAdjacent(int x, int y){
 		
 		if((x<=0) || (y<=0) || (x>=10) || (y>=10)){
@@ -120,14 +118,11 @@ public class MyPanel extends JPanel {
 			setBombCounter(0);
 			countBombs(x, y);
 			if(bombCounter!=0) {
-				//System.out.println("Hey!!!!");
 			}
 			if(getBombCounter() != 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
 				colorArray[x][y] = Color.GRAY;
 				grayCounter++;
-				
 				repaint();
-				//System.out.println(getBombCounter());
 
 			} else {
 				if(getBombCounter() == 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
@@ -146,6 +141,7 @@ public class MyPanel extends JPanel {
 		}
 	}
 
+	//Count the bombs on the current panel
 	public void countBombs (int x, int y) {
 		if (colorArray[x][y].equals(Color.WHITE)) { 
 			if (x == 9) {
@@ -190,14 +186,22 @@ public class MyPanel extends JPanel {
 			}	
 		}
 	}	
+	
+	//Getter for bombCounter
 	public int getBombCounter() {
 		return bombCounter;}
+	
+	//Setter for bombCounter
 	public void setBombCounter(int i) {
 		bombCounter = i;
 	}
+	
+	//Setter for grayCounter
 	public void setGrayCounter(int i){
 		grayCounter = i;
 	}
+	
+	//Getter for grayCounter
 	public int getGrayCounter() {
 		return grayCounter;
 	}

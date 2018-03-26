@@ -16,8 +16,7 @@ public class MyMouseAdapter extends MouseAdapter {
 	Color rojo = new Color (255,0,1);
 	private static int numberBombs[][] = new int [10][11];
 
-
-
+	
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -112,11 +111,11 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
-
 							if(myPanel.isBomb[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==false) {
-								if(firstClick) {
 
-									while (maxBombs > 0 ) { // implementa las bombas 
+								//Creates the bombs and expands the panels when the user click on the 9x9 frame for the first time:
+								if(firstClick) {
+									while (maxBombs > 0 ) {
 										int randX = generator.nextInt(9)+1;
 										int randY = generator.nextInt(9)+1;
 
@@ -142,13 +141,18 @@ public class MyMouseAdapter extends MouseAdapter {
 									}
 									firstClick = false;
 								}
+
+								//Reveals the nearby panels where the user clicked 
 								myPanel.revealAdjacent(gridX, gridY);
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
+								//If the user left clicks on the red panel, do nothing
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)) {
+								//If the user left clicks on the gray panel, do nothing
 
-							}else { //The user loses the game
+							}else { //The user loses the game:
+								//Reveals all the mines:
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
 										if(myPanel.isBomb[i][j] == true) {
@@ -157,12 +161,14 @@ public class MyMouseAdapter extends MouseAdapter {
 										}
 									}
 								}
-								
+
+								//Opens up a window, asking if the user wishes to play again or not:
 								int response = JOptionPane.showConfirmDialog(null, "Sorry, you lost the game. Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
 								if (response == JOptionPane.NO_OPTION) {
 									System.exit(0);
 
 								} else if (response == JOptionPane.YES_OPTION) {
+									//Resets the necessary variables to start a new game
 									for(int i=1;i<10;i++) {
 										for(int j=1;j<10;j++) {
 											myPanel.colorArray[i][j]= Color.WHITE;
@@ -179,7 +185,11 @@ public class MyMouseAdapter extends MouseAdapter {
 									System.exit(0);
 								}
 							}
-						}	if (myPanel.getGrayCounter() == 71) { //The user wins the game
+						}  
+						
+						//The user wins the game:
+						if (myPanel.getGrayCounter() == 71) {
+							//Reveals all the mines: 
 							for(int i=1;i<10;i++) {
 								for(int j=1;j<10;j++) {
 									if( myPanel.isBomb[i][j] == true) {
@@ -188,11 +198,13 @@ public class MyMouseAdapter extends MouseAdapter {
 									}
 								}
 							}
+							//Opens up a window, asking if the user wishes to play again or not:
 							int response = JOptionPane.showConfirmDialog(null, "You Win! Play again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
 							if (response == JOptionPane.NO_OPTION) {
 								System.exit(0);
 
 							} else if (response == JOptionPane.YES_OPTION) {
+								//Resets the necessary variables to start a new game:
 								for(int i=1;i<10;i++) {
 									for(int j=1;j<10;j++) {
 										myPanel.colorArray[i][j]= Color.WHITE;
