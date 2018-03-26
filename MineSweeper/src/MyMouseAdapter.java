@@ -115,7 +115,7 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
-							if(myPanel.isBomb[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==false) {
+							if(!myPanel.isBomb[myPanel.mouseDownGridX][myPanel.mouseDownGridY]) {
 
 								//Creates the bombs and expands the panels when the user click on the 9x9 frame for the first time:
 								if(firstClick) {
@@ -144,7 +144,7 @@ public class MyMouseAdapter extends MouseAdapter {
 										}
 									}
 									firstClick = false;
-								} 
+								}
 
 								if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
 									//If the user left clicks on the red panel, do nothing
