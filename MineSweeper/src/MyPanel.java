@@ -119,13 +119,13 @@ public class MyPanel extends JPanel {
 			countBombs(x, y);
 			if(bombCounter!=0) {
 			}
-			if(getBombCounter() != 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
+			if(getBombCounter() != 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY && colorArray[x][y] != Color.RED) {
 				colorArray[x][y] = Color.GRAY;
 				grayCounter++;
 				repaint();
 
 			} else {
-				if(getBombCounter() == 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY) {
+				if(getBombCounter() == 0 && !isBomb[x][y] && colorArray[x][y] != Color.GRAY && colorArray[x][y] != Color.RED) {
 					colorArray[x][y] = Color.GRAY;
 					grayCounter++;
 					revealAdjacent(x, y-1);
@@ -143,49 +143,47 @@ public class MyPanel extends JPanel {
 
 	//Count the bombs on the current panel
 	public void countBombs (int x, int y) {
-		if (colorArray[x][y].equals(Color.WHITE)) { 
 			if (x == 9) {
-				if( isBomb[x][y+1] == true) {
+				if( isBomb[x][y+1]) {
 					bombCounter= bombCounter +1;
-				}if(isBomb[x-1][y+1]== true ) {
+				}if(isBomb[x-1][y+1]) {
 					bombCounter= bombCounter +1;
-				}	if(isBomb[x-1][y]== true ) {
+				}	if(isBomb[x-1][y]) {
 					bombCounter= bombCounter +1;
-				}	if( isBomb[x-1][y-1]== true) {
+				}	if( isBomb[x-1][y-1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x][y-1]== true ) {
+				if(isBomb[x][y-1]) {
 					bombCounter= bombCounter +1;
 				}
 			}
 			else {
-				if(isBomb[x][y+1] == true ) {
+				if(isBomb[x][y+1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x][y-1]==true ) {
+				if(isBomb[x][y-1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x+1][y]==true ) {
+				if(isBomb[x+1][y]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x+1][y+1]==true ) {
+				if(isBomb[x+1][y+1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x+1][y-1]==true ) {
+				if(isBomb[x+1][y-1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x-1][y+1]==true ) {
+				if(isBomb[x-1][y+1]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x-1][y]==true ) {
+				if(isBomb[x-1][y]) {
 					bombCounter= bombCounter +1;
 				}
-				if(isBomb[x-1][y-1]==true ) {
+				if(isBomb[x-1][y-1]) {
 					bombCounter= bombCounter +1;
 				}
 			}	
 		}
-	}	
 	
 	//Getter for bombCounter
 	public int getBombCounter() {
