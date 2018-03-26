@@ -12,7 +12,7 @@ public class MyPanel extends JPanel {
 	private static final int GRID_Y = 25;
 	private static final int INNER_CELL_SIZE = 60;
 	private static final int TOTAL_COLUMNS = 10;
-	private static final int TOTAL_ROWS = 11;   //Last row has only one (gray) cell (originalmente tenia 11 pero le puse 10 para que asi sea un verdadero 10X10
+	private static final int TOTAL_ROWS = 11;   
 	private static int bombCounter =0;
 	public int x = -1;
 	public int y = -1;
@@ -186,6 +186,9 @@ public class MyPanel extends JPanel {
 		return bombCounter;}
 	public void setBombCounter(int i) {
 		bombCounter = i;
+	}
+	public void setGrayCounter(int i){
+		grayCounter = i;
 	}
 	public int getGrayCounter() {
 		return grayCounter;

@@ -5,16 +5,17 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
 	public int maxBombs = 10;
 	public boolean firstClick = true;
 	public Color blanco = new Color (255,255,254);
-	private static int number[][] = new int [10][11];
+	private static int numberBombs[][] = new int [10][11];
+
+
 
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -81,12 +82,6 @@ public class MyMouseAdapter extends MouseAdapter {
 			MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
 			Insets myInsets = myFrame.getInsets();
 
-
-			JLabel endLabel = new JLabel("GAME OVER!",JLabel.CENTER);
-			JLabel winLabel = new JLabel ("You win!! ",JLabel.CENTER);
-			endLabel.setForeground(Color.RED);
-			winLabel.setForeground(Color.BLUE);
-
 			int x1 = myInsets.left;
 			int y1 = myInsets.top;
 			e.translatePoint(-x1, -y1);
@@ -97,34 +92,7 @@ public class MyMouseAdapter extends MouseAdapter {
 			int gridX = myPanel.getGridX(x, y);
 			int gridY = myPanel.getGridY(x, y);
 
-			if(firstClick == true) {
-				
-				while (maxBombs > 0 ) { // implementa las bombas 
-					int randX = generator.nextInt(9)+1;
-					int randY = generator.nextInt(9)+1;
 
-					if(randX != myPanel.mouseDownGridX
-							&& randX != myPanel.mouseDownGridX+1 
-							&& randX != myPanel.mouseDownGridX-1
-							&& randY != myPanel.mouseDownGridY
-							&& randY != myPanel.mouseDownGridY+1
-							&& randY != myPanel.mouseDownGridY-1) {
-						if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
-							myPanel.colorArray[randX][randY] = blanco;
-							maxBombs= maxBombs - 1;
-						}
-					}
-				}
-
-				for(int i=1;i<10;i++) {
-					for(int j=1;j<10;j++) {
-						myPanel.setBombCounter(0);
-						myPanel.countBombs(i, j);
-						number[i][j] = myPanel.getBombCounter();
-					}
-				}
-				firstClick = false;
-			}
 
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)) {
 				//Had pressed outside
@@ -143,11 +111,37 @@ public class MyMouseAdapter extends MouseAdapter {
 							//On the left column and on the top row... do nothing
 						} else {
 							//On the grid other than on the left column and on the top row:
-							Color newColor = null;
 							Color rojo = new Color (255,0,1);
 
-
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)) {
+								if(firstClick == true) {
+
+									while (maxBombs > 0 ) { // implementa las bombas 
+										int randX = generator.nextInt(9)+1;
+										int randY = generator.nextInt(9)+1;
+
+										if(randX != myPanel.mouseDownGridX
+												&& randX != myPanel.mouseDownGridX+1 
+												&& randX != myPanel.mouseDownGridX-1
+												&& randY != myPanel.mouseDownGridY
+												&& randY != myPanel.mouseDownGridY+1
+												&& randY != myPanel.mouseDownGridY-1) {
+											if (!(myPanel.colorArray[randX][randY].equals(blanco))) {
+												myPanel.colorArray[randX][randY] = blanco;
+												maxBombs= maxBombs - 1;
+											}
+										}
+									}
+
+									for(int i=1;i<10;i++) {
+										for(int j=1;j<10;j++) {
+											myPanel.setBombCounter(0);
+											myPanel.countBombs(i, j);
+											numberBombs[i][j] = myPanel.getBombCounter();
+										}
+									}
+									firstClick = false;
+								}
 								myPanel.revealAdjacent(gridX, gridY);
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)) {
@@ -156,27 +150,50 @@ public class MyMouseAdapter extends MouseAdapter {
 
 							} else if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(rojo)){
 
-							}else if(firstClick == true) {
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY-1] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY-1] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX+1][myPanel.mouseDownGridY+1] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY+1] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY+1] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY] = Color.GRAY;
-								myPanel.colorArray[myPanel.mouseDownGridX-1][myPanel.mouseDownGridY-1] = Color.GRAY;
-							}
-							else {
+							} else {
 								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
-								//ENDGAME CODE
-								myFrame.add(endLabel);
-								myPanel.setVisible(false);
-							}
+								
+								int response = JOptionPane.showConfirmDialog(null, "Sorry, you lost the game. Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
+								if (response == JOptionPane.NO_OPTION) {
+									System.exit(0);
 
+								} else if (response == JOptionPane.YES_OPTION) {
+									for(int i=1;i<10;i++) {
+										for(int j=1;j<10;j++) {
+											myPanel.colorArray[i][j]= Color.WHITE;
+											numberBombs[i][j] = 0;
+										}
+									}
+									firstClick = true;
+									myPanel.setBombCounter(0);
+									myPanel.setGrayCounter(0);
+									maxBombs = 10;
+
+								} else if (response == JOptionPane.CLOSED_OPTION) {
+									System.exit(0);
+								}
+							}
 						}	if (myPanel.getGrayCounter() == 71) {
-							myFrame.add(winLabel);
-							myPanel.setVisible(false);
-							// win Code here
+							//Win window pop up here
+							int response = JOptionPane.showConfirmDialog(null, "You Win! Try again?", "MineSweeper", JOptionPane.YES_NO_OPTION);
+							if (response == JOptionPane.NO_OPTION) {
+								System.exit(0);
+
+							} else if (response == JOptionPane.YES_OPTION) {
+								for(int i=1;i<10;i++) {
+									for(int j=1;j<10;j++) {
+										myPanel.colorArray[i][j]= Color.WHITE;
+										numberBombs[i][j] = 0;
+									}
+								}
+								firstClick = true;
+								myPanel.setBombCounter(0);
+								myPanel.setGrayCounter(0);
+								maxBombs = 10;
+
+							} else if (response == JOptionPane.CLOSED_OPTION) {
+								System.exit(0);
+							}
 						}
 					}
 				}
@@ -260,6 +277,6 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 	}
 	public static int[][] getNumber() {
-		return number;
+		return numberBombs;
 	}
 }
